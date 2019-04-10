@@ -1,0 +1,28 @@
+# projet
+School projet that bugs
+{% extends 'base.html' %}
+
+{% block title %}
+ Wheelaxx / Login
+{% endblock %}
+
+{% block body %}
+
+<p>Please login to Wheelaxx</p>
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+    
+<form method='GET'>
+	<label for='username'>Enter your username please :</label>
+	<input type='text' required placeholder='your username' name='username' id='username'><br/>
+	<label for='password'>Enter your password please :</label>
+	<input type='password' required placeholder='Your password' name='password' id='password'><br/>
+	<input type='submit' value='Log in!'>
+</form>
+
+<p><a href="http://127.0.0.1:8000/signup/" > If you don't have an account...</a> </p>
+
+<button><a href="{% url 'signup' %}"> Join Wheelaxx Association now!</a></button>
+
+{% endblock %}
