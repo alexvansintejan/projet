@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Message: Wheelaxx Association
+{% endblock %}
+
+{% block body %}
+
+<p>Message to wheelax</p>
+
+
+
+<div><form method='GET'>
+	<label for='sender'> Sender please :</label>
+	<input type='text'placeholder='Sender' name='sender' id='sender'><br/>
+	<label for='receiver'>Receiver please:  :</label>
+	<input type='text' placeholder='receiver' name='receiver' id='receiver'><br/>
+	<label for='text_content'>Content of your message: </label>
+	<input type='text'  placeholder='Text...' name='msg_content' id='msg_content'><br/>
+	<input type="submit" value="Send your message">
+	</form>
+</div>	
+{% endblock %}
