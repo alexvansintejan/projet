@@ -1,0 +1,14 @@
+# projet
+School projet that bugs
+
+from django.conf.urls import url
+from django.contrib import admin
+from Projet.views import  signup, login, home
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^login/', login, name='login'),
+    url(r'^signup/', signup, name='signup'),
+    url(r'^home/', home, name='home'),
+    
+]
