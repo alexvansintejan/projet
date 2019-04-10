@@ -1,0 +1,55 @@
+# projet
+School projet that bugs
+Created on Apr 8, 2019
+
+@author: groupe62
+'''
+from django.shortcuts import render, redirect
+from django.template.context_processors import request
+from Projet.models import User, Avion 
+
+def login(request):
+    if 'username' in request.GET and 'password' in request.GET:
+        username= request.GET['username']
+        password = request.GET['password']
+        if len(User.objects.filter(username=username).filter(password=password)) == 1:
+            user = User.objects.get(username=username)
+            request.session['user_id'] = user.id
+            return redirect(home)
+
+        else:
+            return render(request, 'login.html', {'error': 'Bad login or password.'})
+    else: 
+        return render(request, 'login.html')
+
+def signup (request):
+    
+    if 'username' in request.GET:
+        user = User(username=request.GET['username'],
+                       password=request.GET['password'],
+                       type=request.GET['type'],)
+        
+        user.save()
+        request.session['user_id']=user.id
+        return redirect('/home')
+    else:
+        return render(request, 'signup.html')
+
+
+def home(request):
+    if 'user_id' in request.session:
+        user = User.objects.get(id=request.session['user_id'])
+        if user.type == 'E':
+            if 'form_add_aircraft' in request.GET:
+                aircraft = Avion(nom=request.GET['name'],
+                             compagnie=request.GET['company'],
+                             capacite=request.GET['capacite'])
+                aircraft.save()
+            aircrafts = Avion.objects.all()
+            if 'form_add_flight' in request.GET:
+                avion = Avion.objects.get(id=request.GET['aircraft_id'])
+                date_init = request.GET['date_init']
+                date_finale = request.GET['date_final']
+            return render(request, 'home.html',{'user': user,'aircrafts': aircrafts})
+        else: 
+            return render (request, 'home.html', {'user': user}) 
