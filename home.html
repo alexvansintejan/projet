@@ -1,0 +1,66 @@
+# projet
+School projet that bugs
+
+{% extends 'base.html' %}
+
+{% block title %}
+
+	Home
+	{% if user.type == 'E' %}
+	 	- Employee version
+ 	{% else %}
+ 		 - Welcome {{user.username}}
+ 	{% endif %}
+
+{% endblock %}
+
+{% block body %}
+   
+    {% if user.type == 'E' %}
+		<h1>Employee version</h1>
+        <div style='float:left;width:400px;'>
+	    <h2>Add an aircraft</h2>
+		<form method='GET'>
+				<input type='hidden' name='form_add_aircraft' value='sent'>
+				<label for='name'>Name of the aircraft</label>
+				<input id='name' type='text' placeholder='Name of the aircraft' name='name' required><br/>
+				<label for='capacite'>Number of seats</label>
+				<input id='capacite' type='number' min='0' placeholder='Number of seats' name='capacite' required><br/>
+				<label id='company'>Airline Company</label>
+				<input id='company' type='text' placeholder='Airline Company' name='company' required><br/>
+				<input type='submit' value='Add the aircraft'>
+		</form>
+		</div>
+		<div style='float:left;width:400px;'>
+			<h2>Add a flight</h2>
+			<form method='GET'>
+				<input type='hidden' name='form_add_flight' value='sent'>
+				<label for='city_init'>Departure city</label>
+				<input id='city_init' type='text' placeholder='Departure city' name='city_init' required><br/>
+				<label for='city_final'>Arrival city</label>
+				<input id='city_final' type='text' placeholder='Arrival city' name='city_final' required><br/>
+				<label for='aircraft'>Choose the aircraft</label>
+				<select id='aircraft' name='aircraft_id'>
+				{% for a in aircrafts %}
+					<option value='{{a.id}}'>{{a.nom}} : {{a.capacite}} places appartenant à {{a.compagnie}}</option>
+				{% endfor %}
+				</select><br/>
+
+				<label for='reference'>Reference</label>
+				<input id='reference' type='text' placeholder='Flight reference' name='reference' required><br/>
+				<label id='date_init'>Departure Date</label>
+				<input id='date_init' type='text' placeholder='2018-04-08 14:32' name='date_init' required><br/>
+				<label id='date_final'>Arrival Date</label>
+				<input id='date_final' type='text' placeholder='2018-04-08 18:32' name='date_final' required><br/>
+				<label id='price'>Price of the ticket</label>
+				<input id='price' type='number' min='0' placeholder='Price of the ticket' name='price' required><br/>
+				<input type='submit' value='Add the flight'>
+
+			</form>
+		
+      {% endif %}
+   {% if user.type == 'C' %}
+		<h1>Client version</h1>		
+		<p> J'espere que c'est ca</p>
+   {% endif %}		
+{% endblock %}	
