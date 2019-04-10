@@ -84,3 +84,15 @@ def home(request):
             return render (request, 'home.html', {'user': user}) 
         
         
+        
+        
+def send(request):
+    if 'sender' in request.GET:
+        new_message = Message(sender=request.GET['sender'],
+                              receiver=request.GET['receiver'],
+                              msg_content=request.GET['msg_content']
+                              )
+        new_message.save()
+    messages=Message.objects.all()    
+    return render(request, 'send.html', {'messages': messages})
+    
