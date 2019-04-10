@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Wheelaxx{% endblock %}</title>
+    <link rel="icon" href='https://png.pngtree.com/element_origin_min_pic/16/12/15/26d336fe21a5d5411c7d040dc125aa16.jpg' type="image/gif" sizes="16x16">
+</head>
+<body>
+
+<div style='float:right'>
+<img src='https://png.pngtree.com/element_origin_min_pic/16/12/15/26d336fe21a5d5411c7d040dc125aa16.jpg' width='200px' height='200px'>
+</div>
+{% block body %}
+{% endblock %}
+</body>
+</html>
