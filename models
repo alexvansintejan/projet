@@ -1,6 +1,9 @@
-# projet
-School projet that bugs
 
+'''
+Created on Apr 8, 2019
+
+@author: groupe62
+'''
 from django.db import models
 
 class User(models.Model):
@@ -21,3 +24,44 @@ class Avion(models.Model):
 
     def __str__(self):
         return "%s de %s places appartenant à %s" % (self.nom, self.capacite, self.compagnie)
+    
+class Ville(models.Model):
+    nom = models.CharField(max_length=50, blank=True, null=True)
+    prefixe = models.CharField(max_length=3, blank=True, null=True)
+
+    def __str__(self):
+        return "%s - %s" % (self.nom, self.prefixe)
+    
+    
+class Trajet(models.Model):
+    ville_init = models.ForeignKey(Ville, related_name='ville_init', blank=True, null=True, on_delete=models.CASCADE)
+    ville_finale = models.ForeignKey(Ville, related_name='ville_finale', blank=True, null=True,
+                                     on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "%s a %s" % (self.ville_init, self.ville_finale)
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, related_name="sender")
+    receiver = models.ForeignKey(User, related_name="receiver")
+    msg_content = models.TextField()
+    created_at = models.TimeField()
+    
+    def __str__(self):
+        return "% à % " %(self.sender, self.receiver)
+    
+
+
+
+
+class Vol(models.Model):
+    trajet = models.ForeignKey(Trajet, on_delete=models.CASCADE, blank=True, null=True)
+    avion = models.ForeignKey(Avion, on_delete=models.CASCADE, blank=True, null=True)
+    datetime_depart = models.DateTimeField(auto_now=False, blank=True, null=True)
+    datetime_arrivee = models.DateTimeField(auto_now=False, blank=True, null=True)
+    prix = models.FloatField(blank=True, null=True)
+    reference = models.CharField(max_length=20, blank=True, null=True)
+
+    def __str__(self):
+        return "Vol [%s] decolle le %s de %s et atterit a %s, le %s" % (
+        self.reference, self.datetime_depart, self.trajet.ville_init, self.trajet.ville_finale, self.datetime_arrivee)
