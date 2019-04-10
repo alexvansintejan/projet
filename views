@@ -1,12 +1,12 @@
-# projet
-School projet that bugs
+'''
 Created on Apr 8, 2019
 
 @author: groupe62
 '''
 from django.shortcuts import render, redirect
 from django.template.context_processors import request
-from Projet.models import User, Avion 
+from Projet.models import *
+
 
 def login(request):
     if 'username' in request.GET and 'password' in request.GET:
@@ -50,6 +50,37 @@ def home(request):
                 avion = Avion.objects.get(id=request.GET['aircraft_id'])
                 date_init = request.GET['date_init']
                 date_finale = request.GET['date_final']
-            return render(request, 'home.html',{'user': user,'aircrafts': aircrafts})
+                ville_i = request.GET['city_init'].lower()
+                if len(Ville.objects.all().filter(nom=ville_i)) == 0:
+                    ville_init = Ville(nom=ville_i, prefixe=ville_i[0:3].upper())
+                    ville_init.save()
+                else:
+                    ville_init = Ville.objects.get(nom=ville_i)
+                ville_f = request.GET['city_final'].lower()#minuscule
+                if len(Ville.objects.all().filter(nom=ville_f)) == 0:
+                    ville_finale = Ville(nom=ville_f, prefixe=ville_f[0:3].upper())
+                    ville_finale.save()
+                else:
+                    ville_finale = Ville.objects.get(nom=ville_f)
+
+                trajet = Trajet(
+                ville_init=ville_init,
+                    ville_finale=ville_finale)
+                trajet.save()
+
+                vol = Vol(
+                    trajet=trajet,
+                    prix=request.GET['price'],
+                    avion=avion,
+                    reference=request.GET['reference'],
+                    datetime_depart=request.GET['date_init'],
+                    datetime_arrivee=request.GET['date_final'])
+                vol.save()
+                vols = Vol.objects.all()
+                aircrafts = Avion.objects.all()
+            vols = Vol.objects.all().order_by('datetime_depart')
+            return render(request, 'home.html',{'user': user,'aircrafts': aircrafts, 'vols': vols})
         else: 
             return render (request, 'home.html', {'user': user}) 
+        
+        
