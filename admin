@@ -1,8 +1,14 @@
-# projet
-School projet that bugs
+'''
+Created on Apr 8, 2019
 
+@author: groupe62
+'''
 from django.contrib import admin
-from Projet.models import User, Avion
+from Projet.models import User, Avion, Ville, Trajet, Vol, Message
 
 admin.site.register(User)
 admin.site.register(Avion)
+admin.site.register(Ville)
+admin.site.register(Trajet)
+admin.site.register(Vol)
+admin.site.register(Message)
