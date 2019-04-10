@@ -1,0 +1,8 @@
+# projet
+School projet that bugs
+
+from django.contrib import admin
+from Projet.models import User, Avion
+
+admin.site.register(User)
+admin.site.register(Avion)
